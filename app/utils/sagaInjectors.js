@@ -15,7 +15,7 @@ const checkKey = key =>
     '(app/utils...) injectSaga: Expected `key` to be a non empty string',
   );
 
-const checkDescriptor = descriptor => {
+const checkDescriptor = (descriptor) => {
   const shape = {
     saga: isFunction,
     mode: mode => isString(mode) && allowedModes.includes(mode),
