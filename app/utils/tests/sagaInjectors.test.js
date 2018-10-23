@@ -28,10 +28,12 @@ describe('injectors', () => {
     });
 
     it('should return injectors', () => {
-      expect(getInjectors(store)).toEqual(expect.objectContaining({
-        injectSaga: expect.any(Function),
-        ejectSaga: expect.any(Function),
-      }));
+      expect(getInjectors(store)).toEqual(
+        expect.objectContaining({
+          injectSaga: expect.any(Function),
+          ejectSaga: expect.any(Function),
+        }),
+      );
     });
 
     it('should throw if passed invalid store shape', () => {
@@ -66,9 +68,9 @@ describe('injectors', () => {
       expect(() => ejectSaga(1)).toThrow();
     });
 
-    it('should cancel a saga in RESTART_ON_REMOUNT mode', () => {
+    it('should cancel a saga in a default mode', () => {
       const cancel = jest.fn();
-      store.injectedSagas.test = { task: { cancel }, mode: RESTART_ON_REMOUNT };
+      store.injectedSagas.test = { task: { cancel } };
       ejectSaga('test');
 
       expect(cancel).toHaveBeenCalled();
@@ -144,14 +146,18 @@ describe('injectors', () => {
       expect(() => injectSaga('test')).toThrow();
       expect(() => injectSaga('test', { saga: 1 })).toThrow();
       expect(() =>
-        injectSaga('test', { saga: testSaga, mode: 'testMode' })).toThrow();
+        injectSaga('test', { saga: testSaga, mode: 'testMode' }),
+      ).toThrow();
       expect(() => injectSaga('test', { saga: testSaga, mode: 1 })).toThrow();
       expect(() =>
-        injectSaga('test', { saga: testSaga, mode: RESTART_ON_REMOUNT })).not.toThrow();
+        injectSaga('test', { saga: testSaga, mode: RESTART_ON_REMOUNT }),
+      ).not.toThrow();
       expect(() =>
-        injectSaga('test', { saga: testSaga, mode: DAEMON })).not.toThrow();
+        injectSaga('test', { saga: testSaga, mode: DAEMON }),
+      ).not.toThrow();
       expect(() =>
-        injectSaga('test', { saga: testSaga, mode: ONCE_TILL_UNMOUNT })).not.toThrow();
+        injectSaga('test', { saga: testSaga, mode: ONCE_TILL_UNMOUNT }),
+      ).not.toThrow();
     });
 
     it('should pass args to saga.run', () => {
