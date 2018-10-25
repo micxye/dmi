@@ -6,6 +6,7 @@ const logger = require('./logger');
 const argv = require('./argv');
 const port = require('./port');
 const setup = require('./middlewares/frontendMiddleware');
+const api = require('./middlewares/api');
 
 const isDev = process.env.NODE_ENV !== 'production';
 const ngrok =
@@ -14,49 +15,10 @@ const ngrok =
     : false;
 const { resolve } = require('path');
 
-const db = require('../database');
-const bodyParser = require('body-parser');
-
 const app = express();
 
 // If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-
-app.get('/strings', (req, res) => {
-  console.log('get');
-  db.getStrings((err, strings) => {
-    if (err) {
-      console.log('DB error', err);
-    } else {
-      res.send(JSON.stringify(strings));
-      res.status(200);
-    }
-  });
-});
-
-app.post('/strings', (req, res) => {
-  db.saveString(req.body.string, (err, strings) => {
-    console.log(req.body.string)
-    if (err) {
-      res.send('error saving string', err);
-    } else {
-      res.send('string saved');
-      console.log(strings);
-    }
-  });
-});
-
-// db.saveString('hellohello', (err, strings) => {
-//   if (err) {
-//     console.log('error saving string', err);
-//   } else {
-//     console.log('string saved', strings);
-//   }
-// });
-// db.getStrings(strings => console.log(strings));
+app.use('/api', api);
 
 // In production we need to pass these values in instead of relying on webpack
 setup(app, {
