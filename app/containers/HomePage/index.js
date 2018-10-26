@@ -12,6 +12,7 @@ import reducer from './reducer';
 import Form from './Form';
 import LastString from './LastString';
 import Input from './Input';
+import SubmitButton from './SubmitButton';
 import { addString, changeString } from './actions';
 import {
   makeSelectString,
@@ -22,7 +23,7 @@ import {
 const HomeWrapper = styled.div`
   margin: 0 auto;
   display: flex;
-  max-width: 300px;
+  max-width: 500px;
   min-height: 100%;
   flex-direction: column;
 `;
@@ -39,14 +40,16 @@ export class HomePage extends React.PureComponent {
   }
 
   render() {
+    const show = this.props.string.length > 0;
     return (
       <HomeWrapper>
         <Form onSubmit={this.props.onSubmitForm}>
-          Enter String Here:
+          Enter String ⇨:
           <Input
             value={this.props.string}
             onChange={this.props.onChangeString}
           />
+          <SubmitButton show={show} type="submit" value="Submit String" />
         </Form>
         <LastString>{this.renderLastString()}</LastString>
       </HomeWrapper>

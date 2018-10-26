@@ -21,16 +21,15 @@ const StringsPageWrapper = styled.div`
 
 export class StringsPage extends React.PureComponent {
   componentDidMount() {
-    // get strings from db, save to store
     this.props.getStrings();
   }
 
   render() {
-    console.log(this.props.strings)
     return (
       <StringsPageWrapper>
+        Strings currenty stored in database:
         {this.props.strings.map((string, i) => {
-          return <div key={i}>{`'${string.string}'`}</div>;
+          return <div key={i}>{`${i}. '${string.string}'`}</div>;
         })}
       </StringsPageWrapper>
     );
