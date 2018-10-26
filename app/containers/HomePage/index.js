@@ -1,22 +1,12 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a necessity for you then you can refactor it and remove
- * the linting exception.
- */
-
 import React from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
+import styled from 'styled-components';
 import saga from './saga';
 import reducer from './reducer';
 import Form from './Form';
+import LastString from './LastString';
 import Input from './Input';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -27,16 +17,33 @@ import {
   makeSelectError,
 } from './selectors';
 
-/* eslint-disable react/prefer-stateless-function */
+const HomeWrapper = styled.div`
+  margin: 0 auto;
+  display: flex;
+  max-width: 300px;
+  min-height: 100%;
+  flex-direction: column;
+`;
+
 export class HomePage extends React.PureComponent {
+  renderLastString() {
+    if (this.props.error) {
+      return 'ERROR adding string to database';
+    }
+    if (this.props.stringEntered) {
+      return `'${this.props.stringEntered}' added to database!`;
+    }
+  }
+
   render() {
     return (
-      <div>
+      <HomeWrapper>
         <Form onSubmit={this.props.onSubmitForm}>
           Enter String Here:
           <Input value={this.props.string} onChange={this.props.onChangeString}/>
         </Form>
-      </div>
+        <LastString>{this.renderLastString()}</LastString>
+      </HomeWrapper>
     );
   }
 }
@@ -44,8 +51,8 @@ export class HomePage extends React.PureComponent {
 export function mapDispatchToProps(dispatch) {
   return {
     onChangeString: e => dispatch(changeString(e.target.value)),
-    onSubmitForm: e => {
-      if (e !== undefined && e.preventDefault) e.preventDefault();
+    onSubmitForm: (e) => {
+      e.preventDefault();
       dispatch(addString());
     }
   }

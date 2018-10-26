@@ -10,7 +10,7 @@ const makeSelectStringEntered = () =>
   createSelector(selectHome, homeState => homeState.get('stringEntered'));
 
 const makeSelectError = () =>
-  createSelector(selectHome, homeState => homeState.get('string'));
+  createSelector(selectHome, homeState => homeState.get('addError'));
 
 export {
   selectHome,
