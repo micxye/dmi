@@ -1,4 +1,9 @@
-import { ADD_STRING, ADD_STRING_SUCCESS, ADD_STRING_ERROR, CHANGE_STRING } from './constants';
+import {
+  ADD_STRING,
+  CHANGE_STRING,
+  ADD_STRING_SUCCESS,
+  ADD_STRING_ERROR,
+} from './constants';
 
 export function addString(string) {
   return {

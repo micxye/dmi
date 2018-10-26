@@ -1,6 +1,11 @@
 import { put, select, takeEvery } from 'redux-saga/effects';
 import request from '../../utils/request';
-import { ADD_STRING, CHANGE_STRING, ADD_STRING_SUCCESS, ADD_STRING_ERROR } from './constants';
+import {
+  ADD_STRING,
+  CHANGE_STRING,
+  ADD_STRING_SUCCESS,
+  ADD_STRING_ERROR,
+} from './constants';
 import { makeSelectString } from './selectors';
 
 export function* addString() {

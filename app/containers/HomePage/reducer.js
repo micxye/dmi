@@ -1,6 +1,10 @@
 import { fromJS } from 'immutable';
 
-import { ADD_STRING_SUCCESS, ADD_STRING_ERROR, CHANGE_STRING } from './constants';
+import {
+  ADD_STRING_SUCCESS,
+  ADD_STRING_ERROR,
+  CHANGE_STRING,
+} from './constants';
 
 export const initialState = fromJS({
   string: '',

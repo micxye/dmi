@@ -1,17 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import styled from 'styled-components';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+
 import saga from './saga';
 import reducer from './reducer';
 import Form from './Form';
 import LastString from './LastString';
 import Input from './Input';
-import injectReducer from 'utils/injectReducer';
-import injectSaga from 'utils/injectSaga';
 import { addString, changeString } from './actions';
-import {   
+import {
   makeSelectString,
   makeSelectStringEntered,
   makeSelectError,
@@ -33,6 +35,7 @@ export class HomePage extends React.PureComponent {
     if (this.props.stringEntered) {
       return `'${this.props.stringEntered}' added to database!`;
     }
+    return null;
   }
 
   render() {
@@ -40,7 +43,10 @@ export class HomePage extends React.PureComponent {
       <HomeWrapper>
         <Form onSubmit={this.props.onSubmitForm}>
           Enter String Here:
-          <Input value={this.props.string} onChange={this.props.onChangeString}/>
+          <Input
+            value={this.props.string}
+            onChange={this.props.onChangeString}
+          />
         </Form>
         <LastString>{this.renderLastString()}</LastString>
       </HomeWrapper>
@@ -48,21 +54,29 @@ export class HomePage extends React.PureComponent {
   }
 }
 
+HomePage.propTypes = {
+  onChangeString: PropTypes.func,
+  onSubmitForm: PropTypes.func,
+  string: PropTypes.string,
+  stringEntered: PropTypes.string,
+  error: PropTypes.bool,
+};
+
 export function mapDispatchToProps(dispatch) {
   return {
     onChangeString: e => dispatch(changeString(e.target.value)),
-    onSubmitForm: (e) => {
+    onSubmitForm: e => {
       e.preventDefault();
       dispatch(addString());
-    }
-  }
+    },
+  };
 }
 
 const mapStateToProps = createStructuredSelector({
   string: makeSelectString(),
   stringEntered: makeSelectStringEntered(),
-  error: makeSelectError()
-})
+  error: makeSelectError(),
+});
 
 const withConnect = connect(
   mapStateToProps,
