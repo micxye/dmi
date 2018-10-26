@@ -8,6 +8,7 @@ import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { makeSelectStrings } from './selectors';
 import { getStrings } from './actions';
+import { addStringSuccess } from '../HomePage/actions';
 import saga from './saga';
 import reducer from './reducer';
 
@@ -22,6 +23,7 @@ const StringsPageWrapper = styled.div`
 export class StringsPage extends React.PureComponent {
   componentDidMount() {
     this.props.getStrings();
+    this.props.resetLastStringEntered();
   }
 
   render() {
@@ -38,12 +40,14 @@ export class StringsPage extends React.PureComponent {
 
 StringsPage.propTypes = {
   getStrings: PropTypes.func,
+  resetLastStringEntered: PropTypes.func,
   strings: PropTypes.array,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
     getStrings: () => dispatch(getStrings()),
+    resetLastStringEntered: () => dispatch(addStringSuccess('')),
   };
 }
 
