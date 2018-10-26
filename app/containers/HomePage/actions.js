@@ -22,7 +22,7 @@ export function addStringSuccess(stringEntered) {
 export function addStringError(error) {
   return {
     type: ADD_STRING_ERROR,
-    error,
+    addError: error,
   };
 }
 

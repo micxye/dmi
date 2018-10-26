@@ -25,7 +25,7 @@ export function* addString() {
       put({ type: ADD_STRING_ERROR, addError: false }),
     ];
   } catch (err) {
-    yield put({ type: ADD_STRING_ERROR, addError: true });
+    // yield put({ type: ADD_STRING_ERROR, addError: true });
   }
 }
 
