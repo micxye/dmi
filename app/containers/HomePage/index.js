@@ -66,7 +66,7 @@ export function mapDispatchToProps(dispatch) {
   return {
     onChangeString: e => dispatch(changeString(e.target.value)),
     onSubmitForm: e => {
-      e.preventDefault();
+      if (e !== undefined && e.preventDefault) e.preventDefault();
       dispatch(addString());
     },
   };

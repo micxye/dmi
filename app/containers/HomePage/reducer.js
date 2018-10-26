@@ -19,7 +19,7 @@ function homeReducer(state = initialState, action) {
     case ADD_STRING_SUCCESS:
       return state.set('stringEntered', action.stringEntered);
     case ADD_STRING_ERROR:
-      return state.set('addError', action.error);
+      return state.set('addError', action.addError);
     default:
       return state;
   }
