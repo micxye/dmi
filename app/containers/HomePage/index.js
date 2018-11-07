@@ -41,6 +41,7 @@ export class HomePage extends React.PureComponent {
 
   render() {
     const show = this.props.string.length > 0;
+    console.log(this.props.string)
     return (
       <HomeWrapper>
         <Form onSubmit={this.props.onSubmitForm}>
